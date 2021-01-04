@@ -24,3 +24,19 @@ variable "docker-image" {
   description = "name of the docker image to deploy"
   default     = "chrisgallivan/automate-all-the-things-docker:latest"
 }
+
+variable "host" {
+  type = string
+}
+
+variable "client_certificate" {
+  type = string
+}
+
+variable "client_key" {
+  type = string
+}
+
+variable "cluster_ca_certificate" {
+  type = string
+}
