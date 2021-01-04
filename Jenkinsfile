@@ -64,7 +64,7 @@ pipeline {
                     }
                 }
         }
-        stage('Provision Cluster & Deploy Image') {
+        stage('Deploy Image to Cluster') {
             steps {
                 script {
                     echo 'Provisioning Kubernetes Cluster...'
