@@ -4,7 +4,7 @@
 
 provider "kubernetes" {
   
-load_config_file = true
+load_config_file = false
 
 host = var.host
 
