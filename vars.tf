@@ -14,7 +14,7 @@ variable "region" {
 variable "app" {
   type        = string
   description = "Name of application"
-  default     = "automate-all-the-things"
+  default     = "automate-all-the-things-pi"
 }
 variable "zone" {
   default = "us-east-2b"
