@@ -22,7 +22,7 @@ variable "zone" {
 variable "docker-image" {
   type        = string
   description = "name of the docker image to deploy"
-  default     = "chrisgallivan/automate-all-the-things-docker:latest"
+  default     = "chrisgallivan/automate-all-the-things-docker-pi:latest"
 }
 
 variable "host" {
