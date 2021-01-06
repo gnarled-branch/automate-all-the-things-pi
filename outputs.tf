@@ -33,5 +33,5 @@ output "cluster_name" {
   value       = ""
 }
 output "app_url" {
-  value = ""
+  value = kubernetes_service.app.external_ips[0].ip
 }
