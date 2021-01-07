@@ -32,6 +32,7 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = ""
 }
+
 output "app_url" {
-  value = kubernetes_service.app.external_ips[0].ip
+  value = format("%s%s/%s","http://", kubernetes_service.app.load_balancer_ingress[0].hostname,"url")
 }
