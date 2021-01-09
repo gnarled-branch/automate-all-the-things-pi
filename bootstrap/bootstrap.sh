@@ -7,5 +7,5 @@ if [[ -z $(aws s3api head-bucket --bucket automate-all-the-things-pi-terraform-s
                 terraform init
                 terraform apply
                 cp /remote_setup/terraformConfig.tf .
-                terraform init
+                terraform init -force-copy
 fi
