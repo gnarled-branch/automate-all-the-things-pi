@@ -73,16 +73,11 @@ pipeline {
 				        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
 		     ]) {
                    
-			    //need to figure out how to make this run one time
+			    //bootstrapping remote state backend for terraform
 			    dir("${env.WORKSPACE}/bootstrap"){
-				    sh 'terraform init'	
-				    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
-				    sh 'terraform apply -auto-approve plan.tfplan'
-				    //need to create the remote file (actually could copy from another directory)
-				    //re-run init - how to make it non interactive?
-				    
-	            
-		    }
+				    sh 'chmod +x ./bootstrap.sh'	
+				    sh './bootstrap.sh'
+			    }
 			    
                     sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
                     sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
