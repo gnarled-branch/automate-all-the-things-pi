@@ -72,10 +72,15 @@ pipeline {
 			    [$class: 'UsernamePasswordMultiBinding', credentialsId: "${awsCredential}",
 				        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
 		     ]) {
-                    dir("${env.WORKSPACE}/bootstrap"){
-                    sh 'terraform init'
-                    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
-		    sh 'terraform apply -auto-approve plan.tfplan'
+                   
+			    //need to figure out how to make this run one time
+			    dir("${env.WORKSPACE}/bootstrap"){
+				    sh 'terraform init'	
+				    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
+				    sh 'terraform apply -auto-approve plan.tfplan'
+				    //need to create the remote file (actually could copy from another directory)
+				    //re-run init - how to make it non interactive?
+				    
 	            
 		    }
 			    
