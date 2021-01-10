@@ -27,7 +27,7 @@ variable "docker-image" {
 
 variable "host" {
   type = string
-  default = "https://192.168.10.62:6443"
+  default = "https://192.168.10.61:6443"
 }
 
 locals {
