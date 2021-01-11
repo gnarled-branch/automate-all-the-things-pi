@@ -67,7 +67,6 @@ pipeline {
         stage('Deploy Image to Cluster') {
             steps {
                 script {
-                    echo 'Provisioning Kubernetes Cluster...'
                     withCredentials([
 			    [$class: 'UsernamePasswordMultiBinding', credentialsId: "${awsCredential}",
 				        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
@@ -75,10 +74,16 @@ pipeline {
                    
 			    //bootstrapping remote state backend for terraform
 			    dir("${env.WORKSPACE}/bootstrap"){
-				    sh 'chmod +x ./bootstrap.sh'	
-				    sh './bootstrap.sh'
+				    echo 'Bootstrap logic...'
+				    sh 'terraform init'
+                    		    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
+		    		    sh 'terraform apply -auto-approve plan.tfplan'
+				    sh 'cp /remote_setup/terraformConfig.tf .'
+				    sh 'terraform init --force-copy -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'	    
 			    }
-			    
+	            
+	            echo 'Provisioning Kubernetes Cluster...'
+                   
                     sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
                     sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
 		    sh 'terraform apply -auto-approve plan.tfplan'
