@@ -75,11 +75,8 @@ pipeline {
 			    //bootstrapping remote state backend for terraform
 			    dir("${env.WORKSPACE}/bootstrap"){
 				    echo 'Bootstrap logic...'
-				    sh 'terraform init'
-                    		    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
-		    		    sh 'terraform apply -auto-approve plan.tfplan'
-				    sh 'cp ./remote_setup/terraformConfig.tf .'
-				    sh 'terraform init --force-copy -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'	    
+				    sh 'chmod +x ./bootstrap.sh'	
+				    sh './bootstrap.sh'
 			    }
 	            
 	            echo 'Provisioning Kubernetes Cluster...'
