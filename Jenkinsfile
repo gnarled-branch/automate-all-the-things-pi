@@ -48,11 +48,10 @@ pipeline {
         stage('Deploy to Docker Hub') {
             steps {
                script {
-                    echo 'Publishing Image to Docker Hub...'
-                    docker.withRegistry( 'http://192.168.10.222:5000') {
+             echo 'Publishing Image to Docker Hub...'
+                    docker.withRegistry( '', dockerHubCredential ) {
                         dockerImage.push("$BUILD_NUMBER")
-                        dockerImage.push('latest')
-                    }
+                        dockerImage.push('latest')                    }
                 }
              }
         }
