@@ -34,6 +34,6 @@ output "cluster_name" {
 }
 
 output "app_url" {
-  #value = format("%s%s/%s","http://", kubernetes_service.app.load_balancer_ingress[0].hostname,"url")
-  value = kubernetes_service.app.spec
+  value = format("%s%s/%s","http://", kubernetes_service.app.load_balancer_ingress[0].hostname,"url")
+  #value = kubernetes_service.app.spec
 }
