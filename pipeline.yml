@@ -1,4 +1,4 @@
-imageName: "chrisgallivan/automate-all-the-things-docker-pi2"
+imageName: "localhost:5000/automate-all-the-things-docker-pi2"
 bucketName: ""
 backendFile: "terraformConfig.tf"
 backendPath: "dev/s3/terraform.tfstate"
