@@ -49,7 +49,7 @@ pipeline {
             steps {
                script {
                     echo 'Publishing Image to Docker Hub...'
-                    docker.withRegistry( 'localhost:5000') {
+                    docker.withRegistry( 'http://localhost:5000') {
                         dockerImage.push("$BUILD_NUMBER")
                         dockerImage.push('latest')
                     }
