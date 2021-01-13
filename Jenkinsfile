@@ -88,7 +88,7 @@ pipeline {
 			script: "terraform output app_url",
                         returnStdout: true
                      ).trim()   
-		     sh 'terraform destroy -auto-approve'
+		//     sh 'terraform destroy -auto-approve'
                     }
                 }
             }
