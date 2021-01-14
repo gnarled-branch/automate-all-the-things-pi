@@ -92,6 +92,19 @@ pipeline {
                 }
             }
         }
+	    stage('Post Deployment Test') {
+            steps {
+		   
+		    sh 'newman run PostDeploymentTests/collection.json'
+	    }
+    }
+	    
+    stage('Tear Down') {
+            steps {
+		   
+		    sh 'terraform destroy  -auto-approve'
+	    }
+    }
    
     }
     post { 
