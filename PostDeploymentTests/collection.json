@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "4a6932d7-8ca1-4b9b-a422-420605a4ba45",
+		"name": "mycollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Automate All the Things",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1238db6d-df63-42f2-8ecb-b937946aa35f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"Automate all the things!\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.222/url",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"222"
+					],
+					"path": [
+						"url"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
