@@ -94,15 +94,16 @@ pipeline {
 	    		    withVault([configuration: configuration, vaultSecrets: secrets]) {
 				
 			        //bootstrapping remote state backend for terraform
-			        dir("${env.WORKSPACE}/bootstrap"){
-				    echo 'Bootstrap logic...'
-				    sh 'chmod +x ./bootstrap.sh'	
-				    sh './bootstrap.sh'
-			        }
+			        //dir("${env.WORKSPACE}/bootstrap"){
+				//    echo 'Bootstrap logic...'
+				//    sh 'chmod +x ./bootstrap.sh'	
+				//    sh './bootstrap.sh'
+			        //}
 	            
 	                        echo 'Provisioning to AWS...'
                    
-                                sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
+                                //sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
+				sh 'terraform init'    
                                 sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
 		                sh 'terraform apply -auto-approve plan.tfplan'
 	                        app_url = sh (
@@ -118,15 +119,16 @@ pipeline {
 	    		         withVault([configuration: configuration, vaultSecrets: secrets]) {
 				
 			            //bootstrapping remote state backend for terraform
-			            dir("${env.WORKSPACE}/bootstrap"){
-				        echo 'Bootstrap logic...'
-				        sh 'chmod +x ./bootstrap.sh'	
-				        sh './bootstrap.sh'
-			            }
+			           // dir("${env.WORKSPACE}/bootstrap"){
+				   //     echo 'Bootstrap logic...'
+				   //     sh 'chmod +x ./bootstrap.sh'	
+				   //     sh './bootstrap.sh'
+			           // }
 	            
 	                            echo 'Provisioning to Azure...'
                    
-                                    sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
+                                   // sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
+			            sh 'terraform init'    		 
                                     sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
 		                    sh 'terraform apply -auto-approve plan.tfplan'
 	                            app_url = sh (
