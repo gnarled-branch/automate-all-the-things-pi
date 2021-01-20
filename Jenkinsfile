@@ -1,3 +1,11 @@
+def secrets = [
+  [path: 'secret/jenkins/aws', engineVersion: 2, secretValues: [
+     [envVar: 'DEPLOYMENT_USERNAME', vaultKey: 'aws_access_id'],
+     [envVar: 'DEPLOYMENT_PASSWORD', vaultKey: 'aws_secret_key']
+    ]],
+]
+def configuration = [vaultUrl: 'http://host.docker.internal:8200',  vaultCredentialId: 'vault_app_role', engineVersion: 2]
+
 def COLOR_MAP = [
     'SUCCESS': 'good', 
     'FAILURE': 'danger',
@@ -66,11 +74,14 @@ pipeline {
         stage('Deploy Image to Cluster') {
             steps {
                 script {
-                    withCredentials([
-			    [$class: 'UsernamePasswordMultiBinding', credentialsId: "${awsCredential}",
-				        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
-		     ]) {
-                   
+                    //withCredentials([
+			//    [$class: 'UsernamePasswordMultiBinding', credentialsId: "${awsCredential}",
+			//	        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
+					
+	//	     ]) {
+
+			withVault([configuration: configuration, vaultSecrets: secrets]) {
+				
 			    //bootstrapping remote state backend for terraform
 			    dir("${env.WORKSPACE}/bootstrap"){
 				    echo 'Bootstrap logic...'
