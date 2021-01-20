@@ -1,9 +1,19 @@
-def secrets = [
+def aws_secrets = [
   [path: 'secret/jenkins/aws', engineVersion: 2, secretValues: [
      [envVar: 'DEPLOYMENT_USERNAME', vaultKey: 'aws_access_id'],
      [envVar: 'DEPLOYMENT_PASSWORD', vaultKey: 'aws_secret_key']
     ]],
 ]
+def azure_secrets = [
+  [path: 'secret/jenkins/azure', engineVersion: 2, secretValues: [
+     [envVar: 'CLIENT_ID', vaultKey: 'client_id'],
+     [envVar: 'CLIENT_SECRET', vaultKey: 'client_secret'],
+     [envVar: 'SUBSCRIPTION_ID', vaultKey: 'subscription_id'],
+     [envVar: 'TENANT_ID', vaultKey: 'tenant_id']
+		  
+    ]],
+]
+
 def configuration = [vaultUrl: 'http://host.docker.internal:8200',  vaultCredentialId: 'vault_app_role', engineVersion: 2]
 
 def COLOR_MAP = [
@@ -80,7 +90,7 @@ pipeline {
 					
 	//	     ]) {
 
-			withVault([configuration: configuration, vaultSecrets: secrets]) {
+			withVault([configuration: configuration, vaultSecrets: aws_secrets]) {
 				
 			    //bootstrapping remote state backend for terraform
 			    dir("${env.WORKSPACE}/bootstrap"){
