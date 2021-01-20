@@ -32,6 +32,10 @@ pipeline {
 	    dockerHubCredential = loadValuesYaml('dockerHubCredential')
             awsCredential = loadValuesYaml('awsCredential')
 	    
+	    //cloud provider
+	    
+	    cloudProvider = loadValuesYaml('cloudProvider')
+	    
 	    //docker config
 	    imageName = loadValuesYaml('imageName')
 	    slackChannel = loadValuesYaml('slackChannel')
@@ -84,32 +88,55 @@ pipeline {
         stage('Deploy Image to Cluster') {
             steps {
                 script {
-                    //withCredentials([
-			//    [$class: 'UsernamePasswordMultiBinding', credentialsId: "${awsCredential}",
-			//	        usernameVariable: 'DEPLOYMENT_USERNAME', passwordVariable: 'DEPLOYMENT_PASSWORD']
-					
-	//	     ]) {
 
-			withVault([configuration: configuration, vaultSecrets: aws_secrets]) {
+			if (cloudProvider == "AWS") {
+	    		    secrets = aws_secrets
+	    		    withVault([configuration: configuration, vaultSecrets: secrets]) {
 				
-			    //bootstrapping remote state backend for terraform
-			    dir("${env.WORKSPACE}/bootstrap"){
+			        //bootstrapping remote state backend for terraform
+			        dir("${env.WORKSPACE}/bootstrap"){
 				    echo 'Bootstrap logic...'
 				    sh 'chmod +x ./bootstrap.sh'	
 				    sh './bootstrap.sh'
-			    }
+			        }
 	            
-	            echo 'Provisioning Kubernetes Cluster...'
+	                        echo 'Provisioning to AWS...'
                    
-                    sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
-                    sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
-		    sh 'terraform apply -auto-approve plan.tfplan'
-	            app_url = sh (
-			script: "terraform output app_url",
-                        returnStdout: true
-                     ).trim()   
-		//     sh 'terraform destroy -auto-approve'
-                    }
+                                sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
+                                sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
+		                sh 'terraform apply -auto-approve plan.tfplan'
+	                        app_url = sh (
+			            script: "terraform output app_url",
+                                    returnStdout: true
+                                ).trim()   
+		
+                           }
+		        }
+			else if (cloudProvider == "AZURE"){
+				
+				 secrets = azure_secrets
+	    		         withVault([configuration: configuration, vaultSecrets: secrets]) {
+				
+			            //bootstrapping remote state backend for terraform
+			            dir("${env.WORKSPACE}/bootstrap"){
+				        echo 'Bootstrap logic...'
+				        sh 'chmod +x ./bootstrap.sh'	
+				        sh './bootstrap.sh'
+			            }
+	            
+	                            echo 'Provisioning to Azure...'
+                   
+                                    sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
+                                    sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
+		                    sh 'terraform apply -auto-approve plan.tfplan'
+	                            app_url = sh (
+			                script: "terraform output app_url",
+                                        returnStdout: true
+                                    ).trim()   
+		
+                               }
+			
+			}
                 }
             }
         }
