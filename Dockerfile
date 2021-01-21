@@ -1,4 +1,4 @@
-FROM arm64v8/node:12
+FROM node:12
 
 #create app directory
 WORKDIR /usr/src/app
