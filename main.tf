@@ -42,12 +42,13 @@ resource "azurerm_app_service" "example" {
 
   site_config {
     app_command_line = ""
-    linux_fx_version = "DOCKER|chrisgallivan/automate-all-the-things-pi2:latest"
+    linux_fx_version = "DOCKER|${var.docker-image}"
   }
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
     "DOCKER_REGISTRY_SERVER_URL"          = "https://index.docker.io"
+    "WEBSITES_PORT"                       = "3000"
    
   }
 }
