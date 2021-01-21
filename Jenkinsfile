@@ -56,7 +56,7 @@ pipeline {
         stage('Build Node App') {
             steps {
                 echo 'Building Node app...'
-                sh 'npm install-test'
+                //sh 'npm install-test'
                   }
         }
         stage('Build Docker Image') {
@@ -64,7 +64,7 @@ pipeline {
                 script{
                     echo 'Building Docker image...'
                     docker.withRegistry( '', dockerHubCredential ) {
-          		dockerImage = docker.build imageName
+          	//	dockerImage = docker.build imageName
 		    }
                 }
              }
@@ -74,16 +74,16 @@ pipeline {
                script {
              echo 'Publishing Image to Docker Hub...'
                     docker.withRegistry( '', dockerHubCredential ) {
-                        dockerImage.push("$BUILD_NUMBER")
-                        dockerImage.push('latest')                    }
+                  //      dockerImage.push("$BUILD_NUMBER")
+                    //    dockerImage.push('latest')                    }
                 }
              }
         }
         stage('Cleanup Local Image') {
             steps {
                script {
-                    sh "docker rmi $imageName:$BUILD_NUMBER"
-                    sh "docker rmi $imageName:latest"
+                   // sh "docker rmi $imageName:$BUILD_NUMBER"
+                   // sh "docker rmi $imageName:latest"
                     }
                 }
         }
