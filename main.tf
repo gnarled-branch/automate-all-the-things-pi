@@ -41,7 +41,7 @@ resource "azurerm_app_service" "example" {
   app_service_plan_id = "${azurerm_app_service_plan.example.id}"
 
   site_config {
-    windows_fx_version = "DOCKER|index.docker.io/chrisgallivan/automate-all-the-things-pi3:latest"
+    windows_fx_version = "DOCKER|index.docker.io/chrisgallivan/automate-all-the-things-pi2:latest"
   }
 
   app_settings = {
