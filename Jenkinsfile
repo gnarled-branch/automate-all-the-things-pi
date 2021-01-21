@@ -63,9 +63,9 @@ pipeline {
              steps {
                 script{
                     echo 'Building Docker image...'
-                    docker.withRegistry( '', dockerHubCredential ) {
+                  //  docker.withRegistry( '', dockerHubCredential ) {
           	//	dockerImage = docker.build imageName
-		    }
+		    //}
                 }
              }
         }
@@ -73,16 +73,18 @@ pipeline {
             steps {
                script {
              echo 'Publishing Image to Docker Hub...'
-                    docker.withRegistry( '', dockerHubCredential ) {
+                  //  docker.withRegistry( '', dockerHubCredential ) {
                   //      dockerImage.push("$BUILD_NUMBER")
                     //    dockerImage.push('latest')                    }
-                }
+                //}
              }
         }
         stage('Cleanup Local Image') {
             steps {
                script {
-                   // sh "docker rmi $imageName:$BUILD_NUMBER"
+                  echo 'Removing Image...'
+                 
+		       // sh "docker rmi $imageName:$BUILD_NUMBER"
                    // sh "docker rmi $imageName:latest"
                     }
                 }
