@@ -89,7 +89,7 @@ pipeline {
                     }
                 }
         }
-        stage('Deploy Image to Cluster') {
+        stage('Deploy Image to Target') {
             steps {
                 script {
 
@@ -154,13 +154,13 @@ pipeline {
 //	    }
   //  }
 	    
-    stage('Tear Down') {
-            steps {
-		    withVault([configuration: configuration, vaultSecrets: secrets]) {
-			sh 'terraform destroy  -auto-approve'
-		    }
+    //stage('Tear Down') {
+    //        steps {
+//		    withVault([configuration: configuration, vaultSecrets: secrets]) {
+//			sh 'terraform destroy  -auto-approve'
+//		    }
 	    }
-    }
+  //  }
    
     }
     post { 
