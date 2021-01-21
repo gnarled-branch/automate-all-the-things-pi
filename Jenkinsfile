@@ -63,7 +63,9 @@ pipeline {
              steps {
                 script{
                     echo 'Building Docker image...'
-                    dockerImage = docker.build imageName
+                    docker.withRegistry( '', dockerHubCredential ) {
+          		dockerImage = docker.build imageName
+		    }
                 }
              }
         }
