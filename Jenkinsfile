@@ -156,8 +156,9 @@ pipeline {
 	    
     stage('Tear Down') {
             steps {
-		   
-		    sh 'terraform destroy  -auto-approve'
+		    withVault([configuration: configuration, vaultSecrets: secrets]) {
+			sh 'terraform destroy  -auto-approve'
+		    }
 	    }
     }
    
