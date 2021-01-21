@@ -153,13 +153,13 @@ pipeline {
 //		    sh 'newman run PostDeploymentTests/collection.json'
 //	    }
   //  }
-	    
-    //stage('Tear Down') {
-    //        steps {
+    
+   // stage('Tear Down') {
+  //          steps {
 //		    withVault([configuration: configuration, vaultSecrets: secrets]) {
 //			sh 'terraform destroy  -auto-approve'
 //		    }
-	    }
+//	    }
   //  }
    
     }
