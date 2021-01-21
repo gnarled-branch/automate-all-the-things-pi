@@ -29,8 +29,8 @@ resource "azurerm_app_service_plan" "example" {
   is_xenon            = true
 
   sku {
-    tier = "Standard"
-    size = "S1"
+    tier = "Free"
+    size = "F1"
   }
 }
 
