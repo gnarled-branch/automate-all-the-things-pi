@@ -25,12 +25,12 @@ resource "azurerm_app_service_plan" "example" {
   name                = "${var.app}-asp"
   location            = "${azurerm_resource_group.example.location}"
   resource_group_name = "${azurerm_resource_group.example.name}"
-  kind                = "xenon"
-  is_xenon            = true
+  kind                = "Linux"
+  reserved            = true
 
   sku {
-    tier = "PremiumV3"
-    size = "P1V3"
+    tier = "Standard"
+    size = "S1"
   }
 }
 
@@ -41,12 +41,12 @@ resource "azurerm_app_service" "example" {
   app_service_plan_id = "${azurerm_app_service_plan.example.id}"
 
   site_config {
-    windows_fx_version = "DOCKER|index.docker.io/chrisgallivan/automate-all-the-things-pi2:latest"
+    app_command_line = ""
+    linux_fx_version = "DOCKER|chrisgallivan/automate-all-the-things-pi2:latest"
   }
 
   app_settings = {
-    "DOCKER_REGISTRY_SERVER_URL" = "https://index.docker.io",
-    "DOCKER_REGISTRY_SERVER_USERNAME" = "",
-    "DOCKER_REGISTRY_SERVER_PASSWORD" = "",
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://index.docker.io"
   }
 }
