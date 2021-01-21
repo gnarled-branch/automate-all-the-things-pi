@@ -49,23 +49,23 @@ pipeline {
 	    successAction = loadValuesYaml('successAction')
 	    failureAction = loadValuesYaml('failureAction')  
 	    app_url = ''
-	    
+	    TF_CLI_CONFIG_FILE='/var/jenkins_home/.terraformrc' 
    }
     agent any
     stages {
         stage('Build Node App') {
             steps {
                 echo 'Building Node app...'
-                //sh 'npm install-test'
+                sh 'npm install-test'
                   }
         }
         stage('Build Docker Image') {
              steps {
                 script{
                     echo 'Building Docker image...'
-                  //  docker.withRegistry( '', dockerHubCredential ) {
-          	//	dockerImage = docker.build imageName
-		    //}
+                    docker.withRegistry( '', dockerHubCredential ) {
+          		dockerImage = docker.build imageName
+		    }
                 }
              }
         }
@@ -73,10 +73,10 @@ pipeline {
             steps {
                script {
              echo 'Publishing Image to Docker Hub...'
-                  //  docker.withRegistry( '', dockerHubCredential ) {
-                  //      dockerImage.push("$BUILD_NUMBER")
-                    //    dockerImage.push('latest')                    }
-                //}
+                    docker.withRegistry( '', dockerHubCredential ) {
+                        dockerImage.push("$BUILD_NUMBER")
+                        dockerImage.push('latest')                    }
+                }
              }
         }
         stage('Cleanup Local Image') {
@@ -84,8 +84,8 @@ pipeline {
                script {
                   echo 'Removing Image...'
                  
-		       // sh "docker rmi $imageName:$BUILD_NUMBER"
-                   // sh "docker rmi $imageName:latest"
+		    sh "docker rmi $imageName:$BUILD_NUMBER"
+                    sh "docker rmi $imageName:latest"
                     }
                 }
         }
@@ -107,7 +107,7 @@ pipeline {
 	                        echo 'Provisioning to AWS...'
                                 //sh 'cp /var/jenkins_home/.terraformrc .'
                                 //sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
-				sh 'export TF_CLI_CONFIG_FILE="/var/jenkins_home/.terraformrc" terraform init'    
+				sh 'terraform init'    
                                 sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
 		                sh 'terraform apply -auto-approve plan.tfplan'
 	                        app_url = sh (
@@ -132,7 +132,7 @@ pipeline {
 	                            echo 'Provisioning to Azure...'
                    		//    sh 'cp /var/jenkins_home/.terraformrc .'
                                    // sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
-			            sh 'export TF_CLI_CONFIG_FILE="/var/jenkins_home/.terraformrc" terraform init'    
+			            sh 'terraform init'    
                                 
                                     sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
 		                    sh 'terraform apply -auto-approve plan.tfplan'
@@ -147,8 +147,8 @@ pipeline {
                 }
             }
         }
-	    stage('Post Deployment Test') {
-            steps {
+    stage('Post Deployment Test') {
+     steps {
 		   
 		    sh 'newman run PostDeploymentTests/collection.json'
 	    }
@@ -182,5 +182,4 @@ pipeline {
         
         }
     }
-}
 }
