@@ -19,6 +19,11 @@ variable "deployment_subscription_id" {
 variable "deployment_tenant_id" {
 
 }
+variable "location" {
+  default     = "eastus"
+  description = "Azure location"
+  
+}
 
 variable "region" {
   default     = "us-east-2"
