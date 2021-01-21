@@ -103,9 +103,9 @@ pipeline {
 			        //}
 	            
 	                        echo 'Provisioning to AWS...'
-                                sh 'cp /var/jenkins_home/.terraformrc .'
+                                //sh 'cp /var/jenkins_home/.terraformrc .'
                                 //sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
-				sh 'terraform init'    
+				sh 'export TF_CLI_CONFIG_FILE="/var/jenkins_home/.terraformrc" terraform init'    
                                 sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
 		                sh 'terraform apply -auto-approve plan.tfplan'
 	                        app_url = sh (
@@ -128,9 +128,10 @@ pipeline {
 			           // }
 	            
 	                            echo 'Provisioning to Azure...'
-                   		    sh 'cp /var/jenkins_home/.terraformrc .'
+                   		//    sh 'cp /var/jenkins_home/.terraformrc .'
                                    // sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
-			            sh 'terraform init'    		 
+			            sh 'export TF_CLI_CONFIG_FILE="/var/jenkins_home/.terraformrc" terraform init'    
+                                
                                     sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
 		                    sh 'terraform apply -auto-approve plan.tfplan'
 	                            app_url = sh (
