@@ -43,6 +43,7 @@ resource "azurerm_app_service" "example" {
   site_config {
     app_command_line = ""
     linux_fx_version = "DOCKER|${var.docker-image}"
+    always_on        = "true"
   }
 
   app_settings = {
