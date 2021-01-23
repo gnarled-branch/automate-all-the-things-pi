@@ -110,10 +110,10 @@ pipeline {
 				sh 'terraform init'    
                                 sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
 		                sh 'terraform apply -auto-approve plan.tfplan'
-	                      //  app_url = sh (
-			      //      script: "terraform output app_url",
-                              //      returnStdout: true
-                              //  ).trim()   
+	                        app_url = sh (
+			            script: "terraform output app_url",
+                                    returnStdout: true
+                                ).trim()   
 		
                            }
 		        }
@@ -136,10 +136,10 @@ pipeline {
                                 
                                     sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
 		                    sh 'terraform apply -auto-approve plan.tfplan'
-	                            //app_url = sh (
-			            //    script: "terraform output app_url",
-                                    //    returnStdout: true
-                                   // ).trim()   
+	                            app_url = sh (
+			                script: "terraform output app_url",
+                                        returnStdout: true
+                                    ).trim()   
 		
                                }
 			
