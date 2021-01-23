@@ -56,7 +56,7 @@ pipeline {
         stage('Build Node App') {
             steps {
                 echo 'Building Node app...'
-                sh 'npm install-test -quiet --no-progress'
+                sh 'npm install-test'
                   }
         }
         stage('Build Docker Image') {
