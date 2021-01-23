@@ -3,7 +3,7 @@ const supertest = require("supertest");
 const request = supertest(app);
 
 app.get("/url", async (req,res) =>{
-res.json({message: "Automate all the things!"});
+res.json({message: "Automate all the things1!"});
 });
 
 it("Gets the endpoint status", async done =>
