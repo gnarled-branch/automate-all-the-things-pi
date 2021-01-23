@@ -56,7 +56,7 @@ pipeline {
         stage('Build Node App') {
             steps {
                 echo 'Building Node app...'
-                sh 'npm install-test'
+                sh 'npm install-test  --prefer-offline &> /dev/null'
                   }
         }
         stage('Build Docker Image') {
