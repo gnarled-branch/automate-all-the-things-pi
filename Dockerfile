@@ -8,9 +8,7 @@ WORKDIR /app
 #install dependencies
 COPY . .
 
-RUN npm install && \                # Install dependencies
-    npm run build && \              # Build the solution
-    npm run test && \               # Run the tests
+RUN npm install-test
     
 # run lean image
 FROM node:12-alpine as run    
@@ -19,11 +17,11 @@ FROM node:12-alpine as run
 WORKDIR /app
 
 #install dependencies
-COPY --from=build-test /app/dist/src/ ./  # Copy binaries resulting from build-test
+COPY . .
 
 COPY package*.json ./    # Copy dependency registry
 
-RUN npm install--only=prod         # Install only production dependencies
+RUN npm install
 
 EXPOSE 3000
 
