@@ -3,7 +3,7 @@ const supertest = require("supertest");
 const request = supertest(app);
 
 app.get("/url", async (req,res) =>{
-res.json({message: "Automate all the things!"});
+res.json({message: "Automate all the things1!"});
 });
 
 it("Gets the endpoint status", async done =>
@@ -19,7 +19,7 @@ it("Tests the endpoint message === Automate all the things1!", async done =>
     expect(res.body.message).toBe("Automate all the things1!");
     done();
     
-})
+}
 it("Tests the endpoint timestamp exists and has a value less than the test's current timestamp", async done =>
 {
     const res = await request.get("/url");
