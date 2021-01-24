@@ -1,9 +1,9 @@
 #define build-test stage
 
-FROM node:12-alpine as build-test          
+FROM node:12 as build-test          
 
 #create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 #install dependencies
 COPY . .
@@ -14,10 +14,10 @@ RUN npm install-test
 FROM node:12-alpine as run    
 
 #create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 #install dependencies
-COPY --from=build-test /usr/src/app/dist/src/ ./  # Copy binaries resulting from build-test
+COPY --from=build-test /app/dist/src/ ./  # Copy binaries resulting from build-test
 
 COPY package*.json ./    # Copy dependency registry
 
