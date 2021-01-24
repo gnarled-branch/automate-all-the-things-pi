@@ -57,7 +57,7 @@ pipeline {
             steps {
                 echo 'Building Node app...'
                 sh 'npm install --prefer-offline &> /dev/null'
-		sh 'npm test'
+		sh 'npm test --runInBand'
 		    
                   }
         }
