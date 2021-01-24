@@ -3,7 +3,7 @@
 FROM node:12-alpine as build-test          
 
 #create app directory
-WORKDIR/usr/src/app
+WORKDIR /usr/src/app
 
 #install dependencies
 COPY . .
