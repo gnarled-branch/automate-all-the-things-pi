@@ -13,10 +13,10 @@ it("Gets the endpoint status", async done =>
     done();
     
 })
-it("Tests the endpoint message === Automate all the things!", async done =>
+it("Tests the endpoint message === Automate all the things1!", async done =>
 {
     const res = await request.get("/url");
-    expect(res.body.message).toBe("Automate all the things!");
+    expect(res.body.message).toBe("Automate all the things1!");
     done();
     
 })
