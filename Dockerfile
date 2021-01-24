@@ -19,8 +19,6 @@ WORKDIR /app
 #install dependencies
 COPY . .
 
-COPY package*.json ./    # Copy dependency registry
-
 RUN npm install
 
 EXPOSE 3000
