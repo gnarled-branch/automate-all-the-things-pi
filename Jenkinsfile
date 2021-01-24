@@ -53,14 +53,14 @@ pipeline {
    }
     agent any
     stages {
-        stage('Build Node App') {
-            steps {
-                echo 'Building Node app...'
-                sh 'npm install-test'
+      //  stage('Build Node App') {
+       //     steps {
+        //        echo 'Building Node app...'
+          //      sh 'npm install-test'
 		    
-                  }
-        }
-        stage('Build Docker Image') {
+            //      }
+        //}
+        stage('Build and Test Docker Image') {
              steps {
                 script{
                     echo 'Building Docker image...'
