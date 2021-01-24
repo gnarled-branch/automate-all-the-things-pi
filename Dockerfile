@@ -8,8 +8,10 @@ WORKDIR /app
 #install dependencies
 COPY . .
 
-RUN npm install-test
-
+RUN npm install && \                # Install dependencies
+    npm run build && \              # Build the solution
+    npm run test && \               # Run the tests
+    
 # run lean image
 FROM node:12-alpine as run    
 
