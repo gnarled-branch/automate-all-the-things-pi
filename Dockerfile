@@ -1,4 +1,6 @@
-FROM node:12-alpine as build-test           #define the base image
+#define build-test stage
+
+FROM node:12-alpine as build-test          
 
 #create app directory
 WORKDIR/usr/src/app
@@ -8,11 +10,8 @@ COPY . .
 
 RUN npm install-test
 
-#bundle app source
-COPY . .
-
-
-FROM node:12-alpine as run           #define the run image
+# run lean image
+FROM node:12-alpine as run    
 
 #create app directory
 WORKDIR /usr/src/app
