@@ -1,15 +1,28 @@
-FROM node:12-alpine
+FROM node:12-alpine as build-test           #define the base image
+
+#create app directory
+WORKDIR/usr/src/app
+
+#install dependencies
+COPY . .
+
+RUN npm install-test
+
+#bundle app source
+COPY . .
+
+
+FROM node:12-alpine as run           #define the run image
 
 #create app directory
 WORKDIR /usr/src/app
 
 #install dependencies
-COPY package*.json ./
+COPY --from=build-test /usr/src/app/dist/src/ ./  # Copy binaries resulting from build-test
 
-RUN npm install
+COPY package*.json ./    # Copy dependency registry
 
-#bundle app source
-COPY . .
+RUN npm install--only=prod         # Install only production dependencies
 
 EXPOSE 3000
 
