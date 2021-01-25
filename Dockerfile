@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
 RUN npm install
-COPY *.js ./
+COPY ./src ./src
 RUN npm test
 
 FROM install-test as build  
