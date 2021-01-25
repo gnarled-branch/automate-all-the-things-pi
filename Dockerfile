@@ -6,7 +6,7 @@ FROM node:12 as build-test
 WORKDIR /app
 
 #install dependencies
-COPY package*.json *test* ./
+COPY package*.json *js ./
 
 RUN npm install-test
     
