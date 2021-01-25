@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel index.js --out-file index-compiled.js"
+    "build": "babel *.js --out-dir /src/dist"
   },
   "repository": {
     "type": "git",
