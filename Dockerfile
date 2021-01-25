@@ -21,7 +21,7 @@ WORKDIR /app
 COPY package.json ./
 COPY .babelrc ./
 RUN npm install
-COPY --from=test-build /app/src/dist ./dist
+COPY --from=test-build /app/src/dist .
 EXPOSE 3000
 
 CMD ["node","index.js"]
