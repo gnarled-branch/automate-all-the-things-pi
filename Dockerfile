@@ -5,9 +5,8 @@ FROM node:12 as install-test
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm install
 COPY . .
-RUN npm test
+RUN npm install
 
 FROM install-test as build  
 WORKDIR /app
