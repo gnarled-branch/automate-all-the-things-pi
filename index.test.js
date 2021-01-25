@@ -1,6 +1,7 @@
 const app = require('./server');
 const supertest = require("supertest");
 const request = supertest(app);
+const regeneratorRuntime = require("regenerator-runtime");
 
 app.get("/url", async (req,res) =>{
 res.json({message: "Automate all the things1!"});
