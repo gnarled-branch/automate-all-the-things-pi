@@ -1,27 +1,21 @@
 #define build-test stage
 
-FROM node:12 as install-test          
+FROM node:12 as build          
 #create app directory
-
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm ci
+RUN npm ci 
 COPY . .
-RUN npm test
-
-FROM install-test as build  
-WORKDIR /app
-COPY . .
-RUN npm run build
+RUN npm test && npm run build
 
 # run lean image
-FROM node:12-alpine as run    
+FROM node:12-slim as run    
 #create app directory
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm ci
+RUN npm ci --production && npm cache clean --force
 COPY --from=build /app/src/dist .
 EXPOSE 3000
 
