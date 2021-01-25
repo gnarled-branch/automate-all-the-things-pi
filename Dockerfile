@@ -7,12 +7,12 @@ WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
 RUN npm ci
-COPY *.js ./
+COPY . .
 RUN npm test
 
 FROM install-test as build  
 WORKDIR /app
-COPY *.js ./
+COPY . .
 RUN npm run build
 
 # run lean image
