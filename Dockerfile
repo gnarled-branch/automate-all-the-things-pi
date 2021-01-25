@@ -16,7 +16,7 @@ COPY *.js ./
 RUN npm run build
 
 # run lean image
-FROM node:12-alpine as run    
+FROM gcr.io/distroless/nodejs as run    
 #create app directory
 WORKDIR /app
 COPY package*.json ./
