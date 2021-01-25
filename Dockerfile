@@ -21,7 +21,7 @@ FROM node:12-alpine as run
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm install
+#RUN npm install
 COPY --from=build /app/src/dist .
 EXPOSE 3000
 
