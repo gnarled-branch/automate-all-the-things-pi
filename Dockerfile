@@ -3,10 +3,8 @@
 FROM node:12 as install-test          
 #create app directory
 WORKDIR /app
-COPY package*.json ./
-COPY .babelrc ./
 COPY . .
-RUN npm install
+RUN npm install-test
 
 FROM install-test as build  
 WORKDIR /app
@@ -22,7 +20,7 @@ WORKDIR /app
 COPY package.json ./
 COPY .babelrc ./
 RUN npm install
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/src/dist ./dist
 EXPOSE 3000
 
 CMD ["node","index.js"]
