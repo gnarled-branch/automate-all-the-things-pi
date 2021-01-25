@@ -4,7 +4,8 @@
   "description": "liatro technical exercise",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel index.js --out-file index-compiled.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,10 @@
     "jest": "^26.6.3",
     "supertest": "^6.0.1",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11"
   }
 }
