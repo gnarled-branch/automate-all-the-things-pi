@@ -6,7 +6,7 @@ FROM node:12 as install-test
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm install
+RUN npm ci
 COPY *.js ./
 RUN npm test
 
@@ -21,7 +21,7 @@ FROM node:12-alpine as run
 WORKDIR /app
 COPY package*.json ./
 COPY .babelrc ./
-RUN npm install
+RUN npm ci
 COPY --from=build /app/src/dist .
 EXPOSE 3000
 
