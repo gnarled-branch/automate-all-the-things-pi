@@ -3,7 +3,7 @@
 FROM node:12.16.1-alpine As builder
 
 #create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
@@ -13,4 +13,4 @@ RUN npm run build --prod
 # run on nginx
 FROM nginx:1.15.8-alpine
 
-COPY --from=builder /usr/src/app/dist/SampleApp/ /usr/share/nginx/html
+COPY --from=builder /app/dist/SampleApp/ /usr/share/nginx/html
