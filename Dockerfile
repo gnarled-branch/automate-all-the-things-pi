@@ -1,9 +1,13 @@
 #define build-test stage
 
-FROM markadams/chromium-xvfb-js As builder
+FROM node:current-alpine3.12 As builder
+
+RUN apk add chromium
 
 #create app directory
 WORKDIR /app
+ENV CHROME_BIN=/usr/bin/chromium-browser
+
 COPY package*.json ./
 RUN npm install
 COPY . .
