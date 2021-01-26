@@ -1,22 +1,15 @@
 #define build-test stage
 
-FROM node:12 as build          
+FROM node:12.16.1-alpine As builder
+
 #create app directory
-WORKDIR /app
+WORKDIR /usr/src/app
 COPY package*.json ./
-COPY .babelrc ./
-RUN npm ci 
+RUN npm install
 COPY . .
-RUN npm test && npm run build
+RUN npm test && npm run build --prod
 
-# run lean image
-FROM node:12-alpine as run    
-#create app directory
-WORKDIR /app
-COPY package*.json ./
-COPY .babelrc ./
-RUN npm ci --production && npm cache clean --force
-COPY --from=build /app/src/dist .
-EXPOSE 3000
+# run on nginx
+FROM nginx:1.15.8-alpine
 
-CMD ["node","index.js"]
+COPY --from=builder /usr/src/app/dist/SampleApp/ /usr/share/nginx/html
