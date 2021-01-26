@@ -3,7 +3,7 @@
 FROM node:12.16.1-alpine As builder
 
 #create app directory
-WORKDIR /app
+WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
