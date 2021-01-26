@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', async () => {
     await page.navigateTo();
-    expect(await page.getTitleText()).toEqual('SampleApp app is running!');
+    expect(await page.getTitleText()).toEqual('This angular app was deployed with docker and terraform (inside an azure app service)!');
   });
 
   afterEach(async () => {
