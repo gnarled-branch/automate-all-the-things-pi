@@ -41,7 +41,7 @@ variable "zone" {
 variable "docker-image" {
   type        = string
   description = "name of the docker image to deploy"
-  default     = "chrisgallivan/angularsampleapp:latest"
+  default     = "chrisgallivan/angularsampleimage:latest"
 }
 
 variable "host" {
