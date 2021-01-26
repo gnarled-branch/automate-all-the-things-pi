@@ -2,7 +2,7 @@ terraform {
 	backend "remote" {
 		organization = "KATA-FRIDAYS"
 		workspaces {
-			name = "automate-all-the-things-pi"
+			name = "automate-all-the-things-angular"
 		}
 	}
 }
