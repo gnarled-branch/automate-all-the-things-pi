@@ -1,5 +1,5 @@
 
-# automate-all-the-things-pi
+# automate-all-the-things-angular
 ![](/images/yoda.jfif)
 
 > We're all using it - the continuous integration and continuous delivery pipeline. 
