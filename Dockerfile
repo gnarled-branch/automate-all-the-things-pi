@@ -10,7 +10,7 @@ COPY . .
 RUN npm test && npm run build
 
 # run lean image
-FROM node:12-slim as run    
+FROM node:12-alpine as run    
 #create app directory
 WORKDIR /app
 COPY package*.json ./
