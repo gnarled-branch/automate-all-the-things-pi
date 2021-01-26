@@ -8,7 +8,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 #RUN npm test && npm run build --prod
-RUN npm run build
+RUN npm run build --prod
 
 # run on nginx
 FROM nginx:1.15.8-alpine
