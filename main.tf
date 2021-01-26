@@ -1,3 +1,4 @@
+#terraform remote state
 terraform {
 	backend "remote" {
 		organization = "KATA-FRIDAYS"
