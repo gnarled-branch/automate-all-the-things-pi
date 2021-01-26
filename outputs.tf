@@ -7,6 +7,6 @@ output "app_service_default_hostname" {
 }
 
 output "app_url" {
-  value = format("%s%s/%s","http://", azurerm_app_service.example.default_site_hostname,"url")
+  value = format("%s%s","http://", azurerm_app_service.example.default_site_hostname)
   
 }
