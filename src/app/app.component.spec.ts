@@ -26,6 +26,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('Sample Angular app deployed to Azure using docker and terraform!');
+    expect(compiled.querySelector('.content span').textContent).toContain('SampleApp angular app deployed with docker and terraform!');
   });
 });
