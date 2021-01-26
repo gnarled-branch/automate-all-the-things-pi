@@ -1,19 +1,19 @@
 #define build-test stage
 
 FROM node:current-alpine3.12 As builder
-
-RUN apk add chromium
-
 #create app directory
 WORKDIR /app
-ENV CHROME_BIN=/usr/bin/chromium-browser
 
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm test && npm run build --prod
+RUN npm run build --prod
 
-#RUN npm run build --prod
+FROM builder as test
+RUN apk add chromium
+WORKDIR /app
+ENV CHROME_BIN=/usr/bin/chromium-browser
+RUN npm test
 
 # run on nginx
 FROM nginx:1.15.8-alpine
