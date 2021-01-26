@@ -5,7 +5,7 @@ def aws_secrets = [
     ]],
 ]
 def azure_secrets = [
-  [path: 'secret/jenkins/azure', engineVersion: 2, secretValues: [
+  [path: 'secret/jenkins/azure/angular', engineVersion: 2, secretValues: [
      [envVar: 'CLIENT_ID', vaultKey: 'client_id'],
      [envVar: 'CLIENT_SECRET', vaultKey: 'client_secret'],
      [envVar: 'SUBSCRIPTION_ID', vaultKey: 'subscription_id'],
