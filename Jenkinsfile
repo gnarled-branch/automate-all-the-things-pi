@@ -53,14 +53,7 @@ pipeline {
    }
     agent any
     stages {
-      //  stage('Build Node App') {
-       //     steps {
-        //        echo 'Building Node app...'
-          //      sh 'npm install-test'
-		    
-            //      }
-        //}
-        stage('Build and Test Docker Image') {
+           stage('Build and Test Docker Image') {
              steps {
                 script{
                     echo 'Building Docker image...'
@@ -94,24 +87,15 @@ pipeline {
             steps {
                 script {
 
-			if (cloudProvider == "AWS") {
+			      if (cloudProvider == "AWS") {
 	    		    secrets = aws_secrets
 	    		    withVault([configuration: configuration, vaultSecrets: secrets]) {
-				
-			        //bootstrapping remote state backend for terraform
-			        //dir("${env.WORKSPACE}/bootstrap"){
-				//    echo 'Bootstrap logic...'
-				//    sh 'chmod +x ./bootstrap.sh'	
-				//    sh './bootstrap.sh'
-			        //}
-	            
-	                        echo 'Provisioning to AWS...'
-                                //sh 'cp /var/jenkins_home/.terraformrc .'
-                                //sh 'terraform init -backend-config=\"access_key=$DEPLOYMENT_USERNAME\"  -backend-config=\"secret_key=$DEPLOYMENT_PASSWORD\"'
-				sh 'terraform init'    
-                                sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
-		                sh 'terraform apply -auto-approve plan.tfplan'
-	                        app_url = sh (
+			  
+	                echo 'Provisioning to AWS...'
+          				sh 'terraform init'    
+                  sh 'terraform plan -out=plan.tfplan -var deployment_username=$DEPLOYMENT_USERNAME -var deployment_password=$DEPLOYMENT_PASSWORD'
+		              sh 'terraform apply -auto-approve plan.tfplan'
+	                app_url = sh (
 			            script: "terraform output app_url",
                                     returnStdout: true
                                 ).trim()   
@@ -123,21 +107,12 @@ pipeline {
 				 secrets = azure_secrets
 	    		         withVault([configuration: configuration, vaultSecrets: secrets]) {
 				
-			            //bootstrapping remote state backend for terraform
-			           // dir("${env.WORKSPACE}/bootstrap"){
-				   //     echo 'Bootstrap logic...'
-				   //     sh 'chmod +x ./bootstrap.sh'	
-				   //     sh './bootstrap.sh'
-			           // }
-	            
-	                            echo 'Provisioning to Azure...'
-                   		//    sh 'cp /var/jenkins_home/.terraformrc .'
-                                   // sh 'terraform init -backend-config=\"client_id=$CLIENT_ID\" -backend-config=\"client_secret=$CLIENT_SECRET\" -backend-config=\"tenant_id=$TENANT_ID\"  -backend-config=\"subscription_id=$SUBSCRIPTION_ID\"'
-			            sh 'terraform init'    
+			             echo 'Provisioning to Azure...'
+                   sh 'terraform init'    
                                 
-                                    sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
-		                    sh 'terraform apply -auto-approve plan.tfplan'
-	                            app_url = sh (
+                   sh 'terraform plan -out=plan.tfplan -var deployment_subscription_id=$SUBSCRIPTION_ID -var deployment_tenant_id=$TENANT_ID -var deployment_client_id=$CLIENT_ID -var deployment_client_secret=$CLIENT_SECRET'
+		               sh 'terraform apply -auto-approve plan.tfplan'
+	                 app_url = sh (
 			                script: "terraform output app_url",
                                         returnStdout: true
                                     ).trim()   
